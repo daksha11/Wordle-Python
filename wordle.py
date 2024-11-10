@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+from nltk.corpus import wordnet
 
 df = pd.read_csv('./5_letters.csv')
 random_number = random.randint(0, len(df))
@@ -9,6 +10,9 @@ for i in range(5):
 word = word.upper()
 word_array = list(word)
 chances = 6
+
+def is_valid_english_word(word):
+    return bool(wordnet.synsets(word))
 
 while (chances > 0):
     word_dict = {}
@@ -22,6 +26,10 @@ while (chances > 0):
     
     if (len(string) != 5):
         print("Enter a 5 letter word.")
+        print()
+        continue
+    elif (is_valid_english_word(string) != True):
+        print("The word is not found in our dictionary, please enter another word.")
         print()
         continue
 
